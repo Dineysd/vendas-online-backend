@@ -9,13 +9,15 @@ import { Repository } from 'typeorm';
 import { StateModule } from './state/state.module';
 import { CityModule } from './city/city.module';
 import { AddressModule } from './address/address.module';
+import { CacheModule } from '@nestjs/cache-manager';
 
 @Module({
   imports: [UserModule,
     StateModule, 
+    CityModule,
     ConfigModule.forRoot({ isGlobal: true,
     envFilePath: '.development.env',
-  }), 
+  }),
   TypeOrmModule.forRoot({
     type: 'postgres',
     database: process.env.DB_DATABASE,
