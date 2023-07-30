@@ -9,7 +9,7 @@ export class UserController {
     constructor(private readonly service: UserService){}
     @UsePipes(ValidationPipe)
     @Post()
-    async createUser(@Body() dto :CreateUserDto): Promise<UserEntity>{
+    async createUser(@Body() dto: CreateUserDto): Promise<UserEntity>{
         return this.service.createUser({...dto})
     }
     @Get()

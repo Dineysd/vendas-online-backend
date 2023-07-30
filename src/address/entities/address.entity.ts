@@ -5,7 +5,7 @@ import { Column, Entity } from "typeorm";
 export class AddressEntity extends BaseGeneric {
 
   @Column({ name: 'user_id', nullable: false })
-  userId: number;
+  user_id: number;
 
   @Column({ name: 'complement', nullable: true })
   complement: string;
