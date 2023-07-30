@@ -5,5 +5,8 @@ export class CreateUserDto{
     phone: string;
     cpf: string;
     password: string;
+    type_user: number;
+    createdAt: Date;
+    updatedAt: Date;
 
 }
