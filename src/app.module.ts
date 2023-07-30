@@ -1,20 +1,13 @@
 import { Module } from '@nestjs/common';
 import { UserModule } from './user/user.module';
-import { UserService } from './user/user.service';
-import { UserController } from './user/user.controller';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserEntity } from './user/entities/user.entity';
-import { Repository } from 'typeorm';
 import { StateModule } from './state/state.module';
 import { CityModule } from './city/city.module';
 import { AddressModule } from './address/address.module';
-import { CacheModule } from '@nestjs/cache-manager';
 
 @Module({
   imports: [UserModule,
-    StateModule, 
-    CityModule,
     ConfigModule.forRoot({ isGlobal: true,
     envFilePath: '.development.env',
   }),
@@ -28,7 +21,6 @@ import { CacheModule } from '@nestjs/cache-manager';
     entities: [`${__dirname}/**/*.entity{.js,*.ts}`],
     migrations: [`${__dirname}/migration/{.ts,*.js}`],
     migrationsRun: true,
-    synchronize: true,
   }), StateModule, CityModule, AddressModule,],
   controllers: [],
   providers: [],
