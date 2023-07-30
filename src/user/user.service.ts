@@ -5,7 +5,7 @@ import { createPasswordHash } from '../utils/bcrypt-password';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserType } from './enum/user-type.enum';
-import { ReturUserDto } from './dtos/return-user.dto';
+import { ReturnUserDto } from './dtos/return-user.dto';
 
 @Injectable()
 export class UserService {
@@ -26,9 +26,24 @@ export class UserService {
         return this.userRepository.save(user);
     }
 
-    async getAllUser(): Promise<ReturUserDto[]>{
+    async getAllUser(): Promise<ReturnUserDto[]>{
         return (await this.userRepository.find()).map(
-            (userEntity)=> new ReturUserDto(userEntity));
+            (userEntity)=> new ReturnUserDto(userEntity));
+    }
+
+    async getUserByIdUsingRelations(userId: number): Promise<UserEntity>{
+        return this.userRepository.findOne({
+            where: {
+              id: userId,
+            },
+            relations: {
+              addresses: {
+                city: {
+                  state: true,
+                },
+              },
+            },
+          });
     }
 
     async findUserById(userId: number): Promise<UserEntity>{
