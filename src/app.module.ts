@@ -4,11 +4,15 @@ import { UserService } from './user/user.service';
 import { UserController } from './user/user.controller';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserEntity } from './user/user.entity';
+import { UserEntity } from './user/entities/user.entity';
 import { Repository } from 'typeorm';
+import { StateModule } from './state/state.module';
+import { CityModule } from './city/city.module';
+import { AddressModule } from './address/address.module';
 
 @Module({
-  imports: [UserModule, 
+  imports: [UserModule,
+    StateModule, 
     ConfigModule.forRoot({ isGlobal: true,
     envFilePath: '.development.env',
   }), 
@@ -23,7 +27,7 @@ import { Repository } from 'typeorm';
     migrations: [`${__dirname}/migration/{.ts,*.js}`],
     migrationsRun: true,
     synchronize: true,
-  }),],
+  }), StateModule, CityModule, AddressModule,],
   controllers: [],
   providers: [],
 })
