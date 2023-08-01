@@ -4,7 +4,7 @@ import { UserEntity} from './entities/user.entity';
 import { createPasswordHash } from '../utils/bcrypt-password';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { UserType } from './enum/user-type.enum';
+import { UserType } from './enums/user-type.enum';
 import { ReturnUserDto } from './dtos/return-user.dto';
 
 @Injectable()
