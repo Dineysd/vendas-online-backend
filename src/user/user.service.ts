@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadGatewayException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UserEntity} from './entities/user.entity';
 import { createPasswordHash } from '../utils/bcrypt-password';
@@ -15,15 +15,23 @@ export class UserService {
       ) {}
 
     async createUser(dto: CreateUserDto): Promise<UserEntity> {
+
+      const user = await this.findUserByEmail(dto.email).catch(
+        () => undefined,
+      );
+  
+      if (user) {
+        throw new BadGatewayException('email registered in system');
+      }
         const passwordHash = await createPasswordHash(dto.password);
 
-        const user ={
+        const userSave ={
             ...dto,
             password: passwordHash,
             type_user: UserType.User,
         }
 
-        return this.userRepository.save(user);
+        return this.userRepository.save(userSave);
     }
 
     async getAllUser(): Promise<ReturnUserDto[]>{
