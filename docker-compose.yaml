@@ -13,6 +13,8 @@ services:
       - DB_PASSWORD=root
       - DB_PORT=5432
       - DB_DATABASE=venda
+      - JWT_SECRET=sua-chave-secreta
+      - JWT_EXPIRES_IN=7d
     
   db:
     image: postgres:13
