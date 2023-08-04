@@ -1,4 +1,4 @@
-import { UserEntity } from "src/user/entities/user.entity";
+import { UserEntity } from "../../user/entities/user.entity";
 import { BaseGeneric } from "../../model-base/base-generic.entity";
 import { Column, Entity, ManyToOne, JoinColumn } from "typeorm";
 import { CityEntity } from "../../city/entities/city.entity";
