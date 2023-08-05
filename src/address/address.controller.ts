@@ -6,7 +6,7 @@ import { CreateAddressDto } from './dtos/create-address.dto';
 import { ReturnAddressDto } from "../address/dtos/return-address.dto";
 import { AddressEntity } from './entities/address.entity';
 import { UserId } from '../decorators/user-id.decorator';
-@Roles(UserType.User)
+@Roles(UserType.User, UserType.Admin)
 @Controller('address')
 export class AddressController {
     constructor(private readonly service: AddressService){}
