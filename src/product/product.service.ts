@@ -41,10 +41,13 @@ export class ProductService {
     return product;
   }
 
-  async updateProductById(id: number, updateProductDto: UpdateProductDto): Promise<UpdateResult> {
-    await this.findProductBy(id);
+  async updateProductById(id: number, updateProductDto: UpdateProductDto): Promise<ProductEntity> {
+    const product = await this.findProductBy(id);
 
-    return this.service.update(id, updateProductDto);
+    return this.service.save({
+      ...product,
+      ...updateProductDto,
+    });
   }
 
   async removeProductById(id: number): Promise<DeleteResult> {
