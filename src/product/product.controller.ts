@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe, Put } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
@@ -17,24 +17,26 @@ export class ProductController {
     return this.productService.create(createProductDto);
   }
   @Roles(UserType.Admin, UserType.Root, UserType.User)
+  @UsePipes(ValidationPipe)
   @Get()
   async findAll(): Promise<ReturnProductDto[]> {
     return (await this.productService.findAll())
     .map((product) => new ReturnProductDto(product));
   }
-
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.productService.findOne(+id);
-  // }
-
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
-  //   return this.productService.update(+id, updateProductDto);
-  // }
-
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.productService.remove(+id);
-  // }
+  @Roles(UserType.Admin, UserType.Root, UserType.User)
+  @UsePipes(ValidationPipe)
+  @Get(':id')
+  findOne(@Param('id') id: number) {
+    return this.productService.findProductBy(id);
+  }
+  @Roles(UserType.Admin, UserType.Root)
+  @Put(':id')
+  update(@Param('id') id: number, @Body() updateProductDto: UpdateProductDto) {
+    return this.productService.updateProductById(id, updateProductDto);
+  }
+  @Roles(UserType.Admin, UserType.Root)
+  @Delete(':id')
+  remove(@Param('id') id: number) {
+    return this.productService.removeProductById(id);
+  }
 }
