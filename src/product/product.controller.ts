@@ -6,35 +6,35 @@ import { ReturnProductDto } from './dto/return-product.dto';
 import { ProductEntity } from './entities/product.entity';
 import { Roles } from 'src/decorators/roles.decorator';
 import { UserType } from 'src/user/enums/user-type.enum';
-
+@Roles(UserType.Admin, UserType.User)
 @Controller('product')
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
-  @Roles(UserType.Admin, UserType.Root)
+  @Roles(UserType.Admin)
   @UsePipes(ValidationPipe)
   @Post()
   create(@Body() createProductDto: CreateProductDto): Promise<ProductEntity> {
     return this.productService.create(createProductDto);
   }
-  @Roles(UserType.Admin, UserType.Root, UserType.User)
+  
   @UsePipes(ValidationPipe)
   @Get()
   async findAll(): Promise<ReturnProductDto[]> {
     return (await this.productService.findAll())
     .map((product) => new ReturnProductDto(product));
   }
-  @Roles(UserType.Admin, UserType.Root, UserType.User)
+  @Roles(UserType.Admin)
   @UsePipes(ValidationPipe)
   @Get(':id')
   findOne(@Param('id') id: number) {
     return this.productService.findProductBy(id);
   }
-  @Roles(UserType.Admin, UserType.Root)
+  @Roles(UserType.Admin,)
   @Put(':id')
   update(@Param('id') id: number, @Body() updateProductDto: UpdateProductDto) {
     return this.productService.updateProductById(id, updateProductDto);
   }
-  @Roles(UserType.Admin, UserType.Root)
+  @Roles(UserType.Admin)
   @Delete(':id')
   remove(@Param('id') id: number) {
     return this.productService.removeProductById(id);

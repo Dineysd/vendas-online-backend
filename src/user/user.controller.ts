@@ -24,19 +24,19 @@ export class UserController {
         return this.service.createUser({...dto})
     }
 
-    @Roles(UserType.Admin, UserType.Root)
+    @Roles(UserType.Admin, UserType.User)
     @UsePipes(ValidationPipe)
     @Patch()
     async updatePassWord(@Body() dto: UpdatePasswordDto, @UserId() id: number): Promise<UserEntity>{
         return this.service.updatePasswordUser(id, dto)
     }
 
-    @Roles(UserType.Admin, UserType.Root)
+    @Roles(UserType.Admin)
     @Get()
     async getAll(): Promise<ReturnUserDto[]> {
         return this.service.getAllUser();
     }
-    @Roles(UserType.Admin, UserType.Root)
+    @Roles(UserType.Admin)
     @Get('/:userId')
     async getUserById(@Param('userId') userId: number): Promise<ReturnUserDto> {
         return new ReturnUserDto(
