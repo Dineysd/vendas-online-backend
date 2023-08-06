@@ -1,17 +1,22 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException, forwardRef } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ProductEntity } from './entities/product.entity';
 import{ Repository} from 'typeorm'
+import { CategoryService } from '../category/category.service';
 
 @Injectable()
 export class ProductService {
   constructor(@InjectRepository(ProductEntity) private readonly service: 
-  Repository<ProductEntity>){}
+  Repository<ProductEntity>,
+  @Inject(forwardRef(() => CategoryService))
+    private readonly categoryService: CategoryService,){}
 
-  create(dto: CreateProductDto) {
-    return this.service.save(dto);
+  async create(dto: CreateProductDto) {
+    await this.categoryService.findCategoryById(dto.categoryId);
+    
+    return this.service.save({...dto});
   }
 
   async findAll(): Promise<ProductEntity[]> {

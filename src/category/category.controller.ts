@@ -22,10 +22,14 @@ export class CategoryController {
   findAll() : Promise<ReturnCategory[]>{
     return this.categoryService.findAll();
   }
-  
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return ;
+
+  @Get(':categoryId')
+  async findCategoryById(
+    @Param('categoryId') categoryId: number,
+  ): Promise<ReturnCategory> {
+    return new ReturnCategory(
+      await this.categoryService.findCategoryById(categoryId),
+    );
   }
 
   @Patch(':id')
