@@ -1,6 +1,5 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable, NotFoundException, forwardRef } from '@nestjs/common';
 import { CreateCategoryDto } from './dto/create-category.dto';
-import { UpdateCategoryDto } from './dto/update-category.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CategoryEntity } from './entities/category.entity';
 import { Repository } from 'typeorm';
@@ -37,6 +36,20 @@ export class CategoryService {
     return category;
   }
 
+  // async findCategoryById(id: number): Promise<CategoryEntity> {
+  //   const category = await this.repository.findOne({
+  //     where: {
+  //       id,
+  //     },
+  //   });
+
+  //   if (!category) {
+  //     throw new NotFoundException(`Category id: ${id} not found`);
+  //   }
+
+  //   return category;
+  // }
+
   async findAll(): Promise<ReturnCategory[]> { 
     const categories = await this.repository.find();
 
@@ -45,10 +58,6 @@ export class CategoryService {
     }
     return categories.map((category) => new ReturnCategory(category));
   }
-
-  // findOne(id: number) {
-  //   return `This action returns a #${id} category`;
-  // }
 
   // update(id: number, updateCategoryDto: UpdateCategoryDto) {
   //   return `This action updates a #${id} category`;

@@ -5,6 +5,7 @@ import { CategoryEntity } from '../entities/category.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { CategoryMock } from '../__mocks__/category.mock';
 import { createCategoryMock } from '../__mocks__/create-category.mock';
+import { ReturnCategory } from '../dto/return-category.dto';
 
 
 describe('CategoryService', () => {
@@ -36,7 +37,8 @@ describe('CategoryService', () => {
   it('should return list category', async () => {
     const categories = await service.findAll();
 
-    expect(categories).toEqual([CategoryMock]);
+    expect(categories).toEqual([CategoryMock]
+      .map((category) => new ReturnCategory(category)));
   });
 
   it('should return error in list category empty', async () => {
