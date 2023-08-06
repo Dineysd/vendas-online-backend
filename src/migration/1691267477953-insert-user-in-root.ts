@@ -16,5 +16,5 @@ export class InsertUserInRoot1691267477953 implements MigrationInterface {
                 WHERE email like 'root@root.com';
         `);
     }
-
+    //senha root: abc
 }

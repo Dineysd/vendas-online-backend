@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { ReturnProductDto } from './dto/return-product.dto';
 
 @Controller('product')
 export class ProductController {
@@ -13,8 +14,9 @@ export class ProductController {
   }
 
   @Get()
-  findAll() {
-    return this.productService.findAll();
+  async findAll(): Promise<ReturnProductDto[]> {
+    return (await this.productService.findAll())
+    .map((product) => new ReturnProductDto(product));
   }
 
   @Get(':id')
