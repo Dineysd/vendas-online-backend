@@ -5,7 +5,6 @@ import { UpdateCategoryDto } from './dto/update-category.dto';
 import { ReturnCategory } from './dto/return-category.dto';
 import { UserType } from '../user/enums/user-type.enum';
 import { Roles } from '../decorators/roles.decorator';
-import { Validate } from 'class-validator';
 
 @Roles(UserType.User, UserType.Admin)
 @Controller('category')
