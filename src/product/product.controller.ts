@@ -4,8 +4,8 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { ReturnProductDto } from './dto/return-product.dto';
 import { ProductEntity } from './entities/product.entity';
-import { Roles } from 'src/decorators/roles.decorator';
-import { UserType } from 'src/user/enums/user-type.enum';
+import { Roles } from '../decorators/roles.decorator';
+import { UserType } from '../user/enums/user-type.enum';
 @Roles(UserType.Admin, UserType.User)
 @Controller('product')
 export class ProductController {
