@@ -1,11 +1,12 @@
-import { BadGatewayException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadGatewayException, BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UserEntity} from './entities/user.entity';
-import { createPasswordHash } from '../utils/bcrypt-password';
+import { createPasswordHash, validatePassword } from '../utils/bcrypt-password';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserType } from './enums/user-type.enum';
 import { ReturnUserDto } from './dtos/return-user.dto';
+import { UpdatePasswordDto } from './dtos/update-password.mock';
 
 @Injectable()
 export class UserService {
@@ -74,7 +75,25 @@ export class UserService {
       }
 
       return user;
-  }
+    } 
+
+    async updatePasswordUser(userId: number, dto: UpdatePasswordDto): Promise<UserEntity>{
+      const user = await this.findUserById(userId)
+
+      const passwordHash = await createPasswordHash(dto.newPassword);
+
+      const isMatch = await validatePassword(dto.lastPassword,user?.password || '');
+
+      if(!isMatch){
+        throw new BadRequestException(`Last password invalid`)
+      }
+
+      return this.userRepository.save({
+        ...user,
+        password: passwordHash
+      })
+
+    }
 }
 
 

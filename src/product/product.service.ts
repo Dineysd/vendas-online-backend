@@ -3,7 +3,7 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ProductEntity } from './entities/product.entity';
-import{ Repository} from 'typeorm'
+import{ DeleteResult, Repository, UpdateResult} from 'typeorm'
 import { CategoryService } from '../category/category.service';
 
 @Injectable()
@@ -28,15 +28,31 @@ export class ProductService {
     return products
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} product`;
+  async findProductBy(id: number): Promise<ProductEntity> {
+    const product = await this.service.findOne({
+      where:{
+        id
+      }
+    });
+    if(!product){
+      throw new NotFoundException(`Product  id: ${id} not found`);
+    }
+
+    return product;
   }
 
-  update(id: number, updateProductDto: UpdateProductDto) {
-    return `This action updates a #${id} product`;
+  async updateProductById(id: number, updateProductDto: UpdateProductDto): Promise<ProductEntity> {
+    const product = await this.findProductBy(id);
+
+    return this.service.save({
+      ...product,
+      ...updateProductDto,
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} product`;
+  async removeProductById(id: number): Promise<DeleteResult> {
+    await this.findProductBy(id);
+
+    return this.service.delete(id);
   }
 }
