@@ -1,7 +1,8 @@
 import { CategoryEntity } from "../../category/entities/category.entity";
 import { BaseGeneric } from "../../model-base/base-generic.entity";
-import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from "typeorm";
 import { ApiProperty } from "@nestjs/swagger";
+import { CartProductEntity } from "../../cart-product/entities/cart-product.entity";
 
 @Entity({name: 'product'})
 export class ProductEntity extends BaseGeneric {
@@ -23,4 +24,7 @@ export class ProductEntity extends BaseGeneric {
   )
   @JoinColumn({ name: 'category_id', referencedColumnName: 'id' })
   category?: CategoryEntity;
+
+  @OneToMany(() => CartProductEntity, (cartProduct) => cartProduct.product)
+  cartProduct?: CartProductEntity[];
 }
