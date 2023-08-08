@@ -4,16 +4,25 @@ import { CreateCartDto } from './dto/create-cart.dto';
 import { UpdateCartDto } from './dto/update-cart.dto';
 import { Roles } from '../decorators/roles.decorator';
 import { UserType } from '../user/enums/user-type.enum';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiCreatedResponse, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import { CartEntity } from './entities/cart.entity';
 import { UserId } from '../decorators/user-id.decorator';
 @ApiTags('Shopping Cart')
 @Roles(UserType.User, UserType.Admin)
 @Controller('cart')
+@ApiBearerAuth()
 export class CartController {
   constructor(private readonly cartService: CartService) {}
+
+  @Roles(UserType.Admin)
   @UsePipes(ValidationPipe)
   @Post()
+  @ApiBody({ type: CreateCartDto })
+  @ApiCreatedResponse({
+      description: 'Cart of user Created Successfully!',
+      type: CartEntity,
+  })
+  @ApiUnauthorizedResponse({ description: 'Not authorized!' })
   create(@Body() createCartDto: CreateCartDto, @UserId() userId: number): Promise<CartEntity> {
     return this.cartService.insertProductInCart(createCartDto, userId);
   }
