@@ -4,8 +4,11 @@ import { CartProductEntity } from "../../cart-product/entities/cart-product.enti
 @Entity({name: 'cart'})
 export class CartEntity extends BaseGeneric {
 
-    @Column({ name: 'user_id', nullable: false })
-    userId: number;
+  @Column({ name: 'user_id', nullable: false })
+  userId: number;
+  
+  @Column({name: 'active', nullable: false})
+  active: boolean;
 
   @OneToMany(() => CartProductEntity, (cartProduct) => cartProduct.cart)
   cartProduct?: CartProductEntity[];
