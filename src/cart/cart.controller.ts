@@ -4,6 +4,8 @@ import { CreateCartDto } from './dto/create-cart.dto';
 import { UpdateCartDto } from './dto/update-cart.dto';
 import { Roles } from '../decorators/roles.decorator';
 import { UserType } from '../user/enums/user-type.enum';
+import { ApiTags } from '@nestjs/swagger';
+@ApiTags('Shopping Cart')
 @Roles(UserType.User, UserType.Admin)
 @Controller('cart')
 export class CartController {
