@@ -49,9 +49,12 @@ export class CartService {
   async insertProductInCart(createCartDto: CreateCartDto, userId: number)
    :Promise<CartEntity> {
     const cart = await this.findCartByUserId(userId).catch(async () => {
-      return this.createCart(userId);
+      return await this.createCart(userId);
     });
-    return await this.cartProductService.insertProductInCart(createCartDto, cart);
+
+    await this.cartProductService.insertProductInCart(createCartDto, cart);
+
+    return await this.findCartByUserId(userId, true);
   }
 
   findAll() {

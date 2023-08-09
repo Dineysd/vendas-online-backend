@@ -7,6 +7,7 @@ import { UserType } from '../user/enums/user-type.enum';
 import { ApiBearerAuth, ApiBody, ApiCreatedResponse, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import { CartEntity } from './entities/cart.entity';
 import { UserId } from '../decorators/user-id.decorator';
+import { ReturnCartDTO } from './dto/return-cat.dto';
 @ApiTags('Shopping Cart')
 @Roles(UserType.User, UserType.Admin)
 @Controller('cart')
@@ -23,8 +24,8 @@ export class CartController {
       type: CartEntity,
   })
   @ApiUnauthorizedResponse({ description: 'Not authorized!' })
-  create(@Body() createCartDto: CreateCartDto, @UserId() userId: number): Promise<CartEntity> {
-    return this.cartService.insertProductInCart(createCartDto, userId);
+  async create(@Body() createCartDto: CreateCartDto, @UserId() userId: number): Promise<ReturnCartDTO> {
+    return new ReturnCartDTO(await this.cartService.insertProductInCart(createCartDto, userId));
   }
 
   @Get()
