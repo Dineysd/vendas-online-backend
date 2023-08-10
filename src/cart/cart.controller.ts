@@ -29,13 +29,9 @@ export class CartController {
   }
 
   @Get()
-  findAll() {
-    return this.cartService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.cartService.findOne(+id);
+  async findCartByUSerId(@UserId() id: number)
+  :Promise<ReturnCartDTO> {
+    return new ReturnCartDTO(await this.cartService.findCartByUserId(id, true));
   }
 
   @Patch(':id')
@@ -43,8 +39,8 @@ export class CartController {
     return this.cartService.update(+id, updateCartDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.cartService.remove(+id);
+  @Delete()
+  remove(@UserId() id: number) {
+    return this.cartService.clearCart(id);
   }
 }
