@@ -12,6 +12,8 @@ import { APP_GUARD } from '@nestjs/core';
 import { JwtModule } from '@nestjs/jwt';
 import { CategoryModule } from './category/category.module';
 import { ProductModule } from './product/product.module';
+import { CartModule } from './cart/cart.module';
+import { CartProductModule } from './cart-product/cart-product.module';
 
 @Module({
   imports: [UserModule,
@@ -28,7 +30,7 @@ import { ProductModule } from './product/product.module';
     entities: [`${__dirname}/**/*.entity{.js,*.ts}`],
     migrations: [`${__dirname}/migration/{.ts,*.js}`],
     migrationsRun: true,
-  }), StateModule, CityModule, AddressModule, CacheModule, AuthModule, JwtModule, CategoryModule, ProductModule],
+  }), StateModule, CityModule, AddressModule, CacheModule, AuthModule, JwtModule, CategoryModule, ProductModule, CartModule, CartProductModule],
   controllers: [],
   providers: [{
     provide: APP_GUARD,

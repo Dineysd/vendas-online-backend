@@ -1,12 +1,19 @@
+import { ApiProperty } from "@nestjs/swagger";
 import { ReturnAddressDto } from "../../address/dtos/return-address.dto";
 import { UserEntity } from "../entities/user.entity";
 
 export class ReturnUserDto{
+    @ApiProperty()
     id: number;
+    @ApiProperty()
     name: string;
+    @ApiProperty()
     email: string;
+    @ApiProperty()
     phone: string;
+    @ApiProperty()
     cpf: string;
+    @ApiProperty()
     addresses?: ReturnAddressDto[];
 
     constructor(userEntity: UserEntity){

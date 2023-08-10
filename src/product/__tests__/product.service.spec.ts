@@ -7,6 +7,7 @@ import { ProductEntityMock } from '../__mocks__/product.mock';
 import { CreateProductMock } from '../__mocks__/create-product.mock';
 import { CategoryService } from '../../category/category.service';
 import { CategoryMock } from '../../category/__mocks__/category.mock';
+import { ReturnDeleteMock } from '../../__mocks__/return-delete.mock';
 
 describe('ProductService', () => {
   let service: ProductService;
@@ -26,7 +27,9 @@ describe('ProductService', () => {
         provide: getRepositoryToken(ProductEntity),
         useValue:{
           find: jest.fn().mockResolvedValue([ProductEntityMock]),
-          save: jest.fn().mockResolvedValue(ProductEntityMock)
+          save: jest.fn().mockResolvedValue(ProductEntityMock),
+          findOne: jest.fn().mockResolvedValue(ProductEntityMock),
+          delete: jest.fn().mockResolvedValue(ReturnDeleteMock)
         }
       }],
     }).compile();
@@ -72,6 +75,40 @@ describe('ProductService', () => {
       .mockRejectedValue(new Error());
 
     expect(service.create(CreateProductMock)).rejects.toThrowError();
+  });
+
+  it('should return product by id', async () => {
+    const products = await service.findProductBy(ProductEntityMock.id);
+
+    expect(products).toEqual(ProductEntityMock)
+  });
+
+  it('should return erro in product by id in DB', async () => {
+    jest
+      .spyOn(service, 'findProductBy')
+      .mockRejectedValue(new Error());
+
+    expect(service.findProductBy(ProductEntityMock.id)).rejects.toThrowError();
+  });
+
+  it('should return product delete by id in DB', async () => {
+    const product = await service.removeProductById(ProductEntityMock.id);
+
+    expect(product).toEqual(ReturnDeleteMock);
+  });
+
+  it('should return product after update in DB', async () => {
+    const product = await service.updateProductById(ProductEntityMock.id, CreateProductMock);
+
+    expect(product).toEqual(ProductEntityMock);
+  });
+
+  it('should error in update product', async () => {
+    jest.spyOn(repository, 'save').mockRejectedValue(new Error());
+
+    expect(
+      service.updateProductById(ProductEntityMock.id, CreateProductMock),
+    ).rejects.toThrowError();
   });
 
 

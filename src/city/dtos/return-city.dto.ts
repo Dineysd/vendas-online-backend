@@ -1,8 +1,11 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { ReturnStateDto } from '../../state/dto/return-state.dto';
 import { CityEntity } from '../entities/city.entity';
 
 export class ReturnCityDto {
+  @ApiProperty()
   name: string;
+  @ApiProperty()
   state?: ReturnStateDto;
 
   constructor(city: CityEntity) {
