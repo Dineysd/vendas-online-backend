@@ -72,19 +72,26 @@ export class CartService {
     return cart;
   }
 
-  findAll() {
-    return `This action returns all cart`;
+  async deleteProductCart(
+    productId: number,
+    userId: number,
+  ): Promise<DeleteResult> {
+    const cart = await this.findCartByUserId(userId);
+
+    return await this.cartProductService.deleteProductInCart(productId, cart.id);
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} cart`;
-  }
+  async updateProductInCart(
+    dto: UpdateCartDto,
+    userId: number,
+  ): Promise<CartEntity> {
+    const cart = await this.findCartByUserId(userId).catch(async () => {
+      return this.createCart(userId);
+    });
 
-  update(id: number, updateCartDto: UpdateCartDto) {
-    return `This action updates a #${id} cart`;
-  }
+    await this.cartProductService.updateProductInCart(dto, cart);
 
-  remove(id: number) {
-    return `This action removes a #${id} cart`;
+    return cart;
   }
+  
 }

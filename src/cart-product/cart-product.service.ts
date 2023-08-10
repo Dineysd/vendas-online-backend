@@ -1,10 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateCartDto } from '../cart/dto/create-cart.dto';
-import { Repository } from 'typeorm';
+import { DeleteResult, Repository } from 'typeorm';
 import { CartProductEntity } from './entities/cart-product.entity';
 import { ProductService } from '../product/product.service';
-import { CartEntity } from 'src/cart/entities/cart.entity';
+import { CartEntity } from '../cart/entities/cart.entity';
+import { UpdateCartDto } from '../cart/dto/update-cart.dto';
 
 @Injectable()
 export class CartProductService {
@@ -46,15 +47,34 @@ export class CartProductService {
     .catch(()=> undefined);
 
     if(!cartProduct){
-        throw this.createProductInCart(dto, cart.id);
+        return this.createProductInCart(dto, cart.id);
     }
 
     return this.repo.save({
         ...cartProduct,
         amount: cartProduct.amount + dto.amount,
       });
+  }
 
+  async updateProductInCart(dto: UpdateCartDto, cart: CartEntity)
+  : Promise<CartProductEntity> {
+    await this.productService.findProductBy(dto.productId)
 
+    const cartProduct = await this.verifyProductInCart(dto.productId, cart.id)
+    .catch(()=> undefined);
 
+    if(!cartProduct){
+        return this.createProductInCart(dto, cart.id);
+    }
+
+    return this.repo.save({
+        ...cartProduct,
+        amount: dto.amount,
+      })
+  }
+
+  async deleteProductInCart(productId: number, cartId: number)
+  : Promise<DeleteResult> {
+    return this.repo.delete({ productId, cartId });
   }
 }

@@ -12,10 +12,11 @@ import { ReturnCartDTO } from './dto/return-cat.dto';
 @Roles(UserType.User, UserType.Admin)
 @Controller('cart')
 @ApiBearerAuth()
+@Roles(UserType.Admin)  
 export class CartController {
   constructor(private readonly cartService: CartService) {}
 
-  @Roles(UserType.Admin)
+  
   @UsePipes(ValidationPipe)
   @Post()
   @ApiBody({ type: CreateCartDto })
@@ -33,14 +34,21 @@ export class CartController {
   :Promise<ReturnCartDTO> {
     return new ReturnCartDTO(await this.cartService.findCartByUserId(id, true));
   }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCartDto: UpdateCartDto) {
-    return this.cartService.update(+id, updateCartDto);
+  @UsePipes(ValidationPipe)
+  @Patch()
+  @ApiUnauthorizedResponse({ description: 'Not authorized!' })
+  async update(@UserId()userId: number, @Body() updateCartDto: UpdateCartDto) {
+    return new ReturnCartDTO(await this.cartService.updateProductInCart(updateCartDto, userId));
   }
 
   @Delete()
+  @ApiUnauthorizedResponse({ description: 'Not authorized!' })
   remove(@UserId() id: number) {
     return this.cartService.clearCart(id);
+  }
+  @Delete('/product/:productId')
+  @ApiUnauthorizedResponse({ description: 'Not authorized!' })
+  removeProduct(@Param('productId') produtoId: number, @UserId() id: number) {
+    return this.cartService.deleteProductCart(produtoId, id);
   }
 }
