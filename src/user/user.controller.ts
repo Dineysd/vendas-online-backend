@@ -5,7 +5,7 @@ import { UserEntity } from './entities/user.entity';
 import { ReturnUserDto } from './dtos/return-user.dto';
 import { Roles } from '../decorators/roles.decorator';
 import { UserType } from './enums/user-type.enum';
-import { UserId } from 'src/decorators/user-id.decorator';
+import { UserId } from '../decorators/user-id.decorator';
 import { UpdatePasswordDto } from './dtos/update-password.mock';
 import { ApiBearerAuth, ApiBody, ApiCreatedResponse, ApiResponse, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger';
 @ApiTags('User')
