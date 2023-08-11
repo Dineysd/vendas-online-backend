@@ -6,7 +6,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { CartProductService } from '../../cart-product/cart-product.service';
 import { CartEntityMock } from '../__mocks__/cart.mock';
 import { ReturnDeleteMock } from '../../__mocks__/return-delete.mock';
-import { userEntityMock } from 'src/user/__mocks__/user.mock';
+import { userEntityMock } from '../../user/__mocks__/user.mock';
 
 describe('CartService', () => {
   let service: CartService;
