@@ -10,6 +10,7 @@ import { userEntityMock } from '../../user/__mocks__/user.mock';
 import { NotFoundException } from '@nestjs/common';
 import { CreateCartMock } from '../../cart-product/__mocks__/create-cart.mock';
 import { ProductEntityMock } from '../../product/__mocks__/product.mock';
+import { UpdateCartMock } from '../../cart-product/__mocks__/update-cart.mock';
 
 describe('CartService', () => {
   let service: CartService;
@@ -141,9 +142,52 @@ describe('CartService', () => {
 
   it('should return DeleteResult in deleteProductCart', async ()=> {
     const spy = jest.spyOn(cartProductService, 'deleteProductInCart');
-    const deletResult = await service.deleteProductCart(ProductEntityMock.id,userEntityMock.id);
+    const deletResult = await service.deleteProductCart(
+      ProductEntityMock.id,
+      userEntityMock.id
+    );
 
     expect(deletResult).toEqual(ReturnDeleteMock)
     expect(spy.mock.calls.length).toEqual(1)
+  });
+
+  it('should return NotFoundException in cart not exist', async () => {
+    jest.spyOn(cartRepository, 'findOne').mockResolvedValue(undefined);
+    const spy = jest.spyOn(cartProductService, 'deleteProductInCart');
+
+    expect(
+      service.deleteProductCart(ProductEntityMock.id, userEntityMock.id),
+    ).rejects.toThrowError(NotFoundException);
+    expect(spy.mock.calls.length).toEqual(0);
+  });
+
+  it('should return cart in updateProductInCart', async () => {
+    const spyCartProductService = jest.spyOn(
+      cartProductService,
+      'updateProductInCart',
+    );
+    const spySave = jest.spyOn(cartRepository, 'save');
+    const cart = await service.updateProductInCart(
+      UpdateCartMock,
+      userEntityMock.id,
+    );
+
+    expect(cart).toEqual(CartEntityMock);
+    expect(spyCartProductService.mock.calls.length).toEqual(1);
+    expect(spySave.mock.calls.length).toEqual(0);
+  });
+
+  it('return cartProduct created', async ()=> {
+    jest.spyOn(cartRepository, 'findOne').mockResolvedValue(undefined)
+
+    const spy = jest.spyOn(cartRepository, 'save');
+
+    const cart = await service.updateProductInCart(
+      UpdateCartMock, 
+      userEntityMock.id)
+
+    expect(cart).toEqual(CartEntityMock);
+    expect(spy.mock.calls.length). toEqual(1)
+
   })
 });
