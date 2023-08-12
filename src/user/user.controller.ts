@@ -6,7 +6,7 @@ import { ReturnUserDto } from './dto/return-user.dto';
 import { Roles } from '../decorators/roles.decorator';
 import { UserType } from './enums/user-type.enum';
 import { UserId } from '../decorators/user-id.decorator';
-import { UpdatePasswordDto } from './dto/update-password.mock';
+import { UpdatePasswordDto } from './dto/update-password.dto';
 import { ApiBearerAuth, ApiBody, ApiCreatedResponse, ApiResponse, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger';
 @ApiTags('User')
 @Controller('user')
