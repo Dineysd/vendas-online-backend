@@ -1,4 +1,4 @@
-import { CreateUserDto } from '../dtos/create-user.dto';
+import { CreateUserDto } from '../dto/create-user.dto';
 
 export const createUserMock: CreateUserDto = {
   cpf: '3214215151',

@@ -1,12 +1,12 @@
 import { BadGatewayException, BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
-import { CreateUserDto } from './dtos/create-user.dto';
+import { CreateUserDto } from './dto/create-user.dto';
 import { UserEntity} from './entities/user.entity';
 import { createPasswordHash, validatePassword } from '../utils/bcrypt-password';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserType } from './enums/user-type.enum';
-import { ReturnUserDto } from './dtos/return-user.dto';
-import { UpdatePasswordDto } from './dtos/update-password.mock';
+import { ReturnUserDto } from './dto/return-user.dto';
+import { UpdatePasswordDto } from './dto/update-password.mock';
 
 @Injectable()
 export class UserService {

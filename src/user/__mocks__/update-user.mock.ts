@@ -1,4 +1,4 @@
-import { UpdatePasswordDto } from "../dtos/update-password.mock";
+import { UpdatePasswordDto } from "../dto/update-password.mock";
 
 export const UpdatePasswordMock: UpdatePasswordDto ={
     newPassword: "adc",

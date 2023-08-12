@@ -5,7 +5,7 @@ import { UserService } from '../user/user.service';
 import { validatePassword } from '../utils/bcrypt-password';
 import { JwtService } from '@nestjs/jwt';
 import { ReturnLogin } from './dtos/return-login.dto';
-import { ReturnUserDto } from '../user/dtos/return-user.dto';
+import { ReturnUserDto } from '../user/dto/return-user.dto';
 import { LoginPayload } from './dtos/login-payload.dto';
 
 @Injectable()
