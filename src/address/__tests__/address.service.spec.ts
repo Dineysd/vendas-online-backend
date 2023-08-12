@@ -9,6 +9,7 @@ import { AddressService } from "../address.service";
 import { AddressEntity } from "../entities/address.entity";
 import { AddressEntityMock } from "../__mocks__/address.mock";
 import { CreateAddressMock } from "../__mocks__/create-address.mock";
+import { NotFoundException } from "@nestjs/common";
 
 describe('CityService', () =>{
   let Address_service: AddressService;
@@ -90,7 +91,15 @@ describe('CityService', () =>{
         expect(
           Address_service.findAllAddressByUserId(userEntityMock.id),
         ).rejects.toThrowError();
-  });
+    });
+
+    it('should return NotFoundException if not address register', async () => {
+      jest.spyOn(repository, 'find').mockResolvedValue(undefined);
+    
+        expect(
+          Address_service.findAllAddressByUserId(userEntityMock.id),
+        ).rejects.toThrowError(NotFoundException);
+    });
     
 
 });

@@ -23,7 +23,7 @@ export class ProductController {
         type: ProductEntity,
     })
     @ApiUnauthorizedResponse({ description: 'Not authorized!' })
-  create(@Body() createProductDto: CreateProductDto): Promise<ProductEntity> {
+  createProduct(@Body() createProductDto: CreateProductDto): Promise<ProductEntity> {
     return this.productService.create(createProductDto);
   }
   
@@ -35,7 +35,7 @@ export class ProductController {
         status: 200,
         type: [ReturnProductDto],
     })
-  async findAll(): Promise<ReturnProductDto[]> {
+  async findAllProducts(): Promise<ReturnProductDto[]> {
     return (await this.productService.findAll())
     .map((product) => new ReturnProductDto(product));
   }
@@ -48,7 +48,7 @@ export class ProductController {
         status: 200,
         type: ProductEntity,
     })
-  findOne(@Param('id') id: number) {
+  findOneProduct(@Param('id') id: number) {
     return this.productService.findProductBy(id);
   }
   @Roles(UserType.Admin,)
@@ -59,7 +59,7 @@ export class ProductController {
         status: 200,
         type: ProductEntity,
     })
-  update(@Param('id') id: number, @Body() updateProductDto: UpdateProductDto) {
+  updateProduct(@Param('id') id: number, @Body() updateProductDto: UpdateProductDto) {
     return this.productService.updateProductById(id, updateProductDto);
   }
   @Roles(UserType.Admin)
@@ -70,7 +70,7 @@ export class ProductController {
         status: 200,
         type: DeleteResult,
     })
-  remove(@Param('id') id: number) {
+  removeProduct(@Param('id') id: number) {
     return this.productService.removeProductById(id);
   }
 }
