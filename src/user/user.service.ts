@@ -42,6 +42,15 @@ export class UserService {
             (userEntity)=> new ReturnUserDto(userEntity));
     }
 
+    async getUserEntities(): Promise<UserEntity[]> {
+      return this.userRepository.find();
+    }
+  
+    async getAllUsers(): Promise<ReturnUserDto[]> {
+      const userEntities = await this.getUserEntities();
+      return userEntities.map(userEntity => new ReturnUserDto(userEntity));
+    }
+
     async getUserByIdUsingRelations(userId: number): Promise<UserEntity>{
         return this.userRepository.findOne({
             where: {
