@@ -18,6 +18,6 @@ export class CityController {
     })
   async getAllCitiesByStateId(
     @Param('stateId') stateId: number): Promise<CityEntity[]> {
-    return  this.serviceCity.getAllCitiesByStateId(stateId);
+    return  this.serviceCity.getAllCacheCitiesByStateId(stateId);
   }
 }

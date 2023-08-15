@@ -1,12 +1,12 @@
 import { Body, Controller,  Get,  Param,  Patch,  Post, UsePipes, ValidationPipe } from '@nestjs/common';
-import { CreateUserDto } from './dtos/create-user.dto';
+import { CreateUserDto } from './dto/create-user.dto';
 import { UserService } from './user.service';
 import { UserEntity } from './entities/user.entity';
-import { ReturnUserDto } from './dtos/return-user.dto';
+import { ReturnUserDto } from './dto/return-user.dto';
 import { Roles } from '../decorators/roles.decorator';
 import { UserType } from './enums/user-type.enum';
-import { UserId } from 'src/decorators/user-id.decorator';
-import { UpdatePasswordDto } from './dtos/update-password.mock';
+import { UserId } from '../decorators/user-id.decorator';
+import { UpdatePasswordDto } from './dto/update-password.dto';
 import { ApiBearerAuth, ApiBody, ApiCreatedResponse, ApiResponse, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger';
 @ApiTags('User')
 @Controller('user')

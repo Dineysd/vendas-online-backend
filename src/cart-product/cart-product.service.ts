@@ -60,12 +60,10 @@ export class CartProductService {
   : Promise<CartProductEntity> {
     await this.productService.findProductBy(dto.productId)
 
-    const cartProduct = await this.verifyProductInCart(dto.productId, cart.id)
-    .catch(()=> undefined);
-
-    if(!cartProduct){
-        return this.createProductInCart(dto, cart.id);
-    }
+    const cartProduct = await this.verifyProductInCart(
+        dto.productId, 
+        cart.id
+      );
 
     return this.repo.save({
         ...cartProduct,

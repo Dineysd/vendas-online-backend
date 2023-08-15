@@ -24,6 +24,7 @@ describe('CityService', () =>{
           provide: getRepositoryToken(CityEntity),
           useValue: {
             findOne: jest.fn().mockResolvedValue(CityEntityMock),
+            find: jest.fn().mockResolvedValue([CityEntityMock]),
           },
         },
       ],
@@ -52,9 +53,15 @@ describe('CityService', () =>{
         expect(service.findCityById(CityEntityMock.id)).rejects.toThrowError();
       });
     
-      it('should return Cities in getAllCitiesByStateId', async () => {
-        const city = await service.getAllCitiesByStateId(CityEntityMock.id);
+      it('should return Cities in getAllCacheCitiesByStateId', async () => {
+        const cacheCities = await service.getAllCacheCitiesByStateId(CityEntityMock.stateId);
     
-        expect(city).toEqual([CityEntityMock]);
+        expect(cacheCities).toEqual([CityEntityMock]);
+      });
+
+      it('should return Cities in getAllCitiesByStateId', async () => {
+        const cities = await service.findAllCitiesByStateId(CityEntityMock.stateId);
+    
+        expect(cities).toEqual([CityEntityMock]);
       });
 });

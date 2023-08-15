@@ -5,7 +5,7 @@ import { UserService } from "../../user/user.service";
 import { AuthService } from "../auth.service";
 import { jwtMock } from "../__mocks__/jwt.mock";
 import { LoginUserMock } from "../__mocks__/login-user.mock";
-import { ReturnUserDto } from "../../user/dtos/return-user.dto";
+import { ReturnUserDto } from "../../user/dto/return-user.dto";
 
 describe('AuthService', () => {
     let service: AuthService;

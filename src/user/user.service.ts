@@ -1,12 +1,12 @@
 import { BadGatewayException, BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
-import { CreateUserDto } from './dtos/create-user.dto';
+import { CreateUserDto } from './dto/create-user.dto';
 import { UserEntity} from './entities/user.entity';
 import { createPasswordHash, validatePassword } from '../utils/bcrypt-password';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserType } from './enums/user-type.enum';
-import { ReturnUserDto } from './dtos/return-user.dto';
-import { UpdatePasswordDto } from './dtos/update-password.mock';
+import { ReturnUserDto } from './dto/return-user.dto';
+import { UpdatePasswordDto } from './dto/update-password.dto';
 
 @Injectable()
 export class UserService {
@@ -40,6 +40,15 @@ export class UserService {
     async getAllUser(): Promise<ReturnUserDto[]>{
         return (await this.userRepository.find()).map(
             (userEntity)=> new ReturnUserDto(userEntity));
+    }
+
+    async getUserEntities(): Promise<UserEntity[]> {
+      return this.userRepository.find();
+    }
+  
+    async getAllUsers(): Promise<ReturnUserDto[]> {
+      const userEntities = await this.getUserEntities();
+      return userEntities.map(userEntity => new ReturnUserDto(userEntity));
     }
 
     async getUserByIdUsingRelations(userId: number): Promise<UserEntity>{

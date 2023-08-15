@@ -7,6 +7,7 @@ import { userEntityMock } from "../__mocks__/user.mock";
 import { createUserMock } from "../__mocks__/create-user.mock";
 import { UserType } from "../enums/user-type.enum";
 import { UpdatePasswordInvalidMock, UpdatePasswordMock } from "../__mocks__/update-user.mock";
+import { returnUserMock } from "../__mocks__/return-user.mock";
 
 describe('UserService', ()=>{
     let service: UserService;
@@ -19,6 +20,7 @@ describe('UserService', ()=>{
                 useValue: {
                   findOne: jest.fn().mockResolvedValue(userEntityMock),
                   save: jest.fn().mockResolvedValue(userEntityMock),
+                  find: jest.fn().mockResolvedValue([userEntityMock]),
                 },
               },]
         }).compile();
@@ -36,6 +38,16 @@ describe('UserService', ()=>{
     it('should return User in findUserByEmail', async () => {
         const user = await service.findUserByEmail(userEntityMock.email);
         expect(user).toEqual(userEntityMock);
+    });
+
+    it('should return User in findAllUser', async () => {
+      const user = await service.getAllUser();
+      expect(user).toEqual([returnUserMock]);
+    });
+
+    it('should return User in findAllEntities', async () => {
+      const user = await service.getUserEntities();
+      expect(user).toEqual([userEntityMock]);
     });
 
     it('should return error in findUserByEmail', async () => {

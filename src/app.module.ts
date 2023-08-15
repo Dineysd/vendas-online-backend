@@ -14,6 +14,7 @@ import { CategoryModule } from './category/category.module';
 import { ProductModule } from './product/product.module';
 import { CartModule } from './cart/cart.module';
 import { CartProductModule } from './cart-product/cart-product.module';
+import { Category2Controller } from './category2/category2.controller';
 
 @Module({
   imports: [UserModule,
@@ -31,7 +32,7 @@ import { CartProductModule } from './cart-product/cart-product.module';
     migrations: [`${__dirname}/migration/{.ts,*.js}`],
     migrationsRun: true,
   }), StateModule, CityModule, AddressModule, CacheModule, AuthModule, JwtModule, CategoryModule, ProductModule, CartModule, CartProductModule],
-  controllers: [],
+  controllers: [Category2Controller],
   providers: [{
     provide: APP_GUARD,
     useClass: RolesGuard,
