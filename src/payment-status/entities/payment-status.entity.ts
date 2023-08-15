@@ -1,5 +1,5 @@
-import { BaseGeneric } from "src/model-base/base-generic.entity";
-import { PaymentEntity } from "src/payment/entities/payment.entity";
+import { BaseGeneric } from "../../model-base/base-generic.entity";
+import { PaymentEntity } from "../../payment/entities/payment.entity";
 import { Column, Entity, OneToMany } from "typeorm";
 
 @Entity({name: 'payment_status'})

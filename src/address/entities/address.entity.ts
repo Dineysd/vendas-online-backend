@@ -3,7 +3,7 @@ import { BaseGeneric } from "../../model-base/base-generic.entity";
 import { Column, Entity, ManyToOne, JoinColumn, OneToMany } from "typeorm";
 import { CityEntity } from "../../city/entities/city.entity";
 import { ApiProperty } from "@nestjs/swagger";
-import { OrderEntity } from "src/order/entities/order.entity";
+import { OrderEntity } from "../../order/entities/order.entity";
 
 @Entity({ name: 'address' })
 export class AddressEntity extends BaseGeneric {

@@ -1,6 +1,6 @@
-import { BaseGeneric } from "src/model-base/base-generic.entity";
-import { OrderEntity } from "src/order/entities/order.entity";
-import { PaymentStatusEntity } from "src/payment-status/entities/payment-status.entity";
+import { BaseGeneric } from "../../model-base/base-generic.entity";
+import { OrderEntity } from "../../order/entities/order.entity";
+import { PaymentStatusEntity } from "../../payment-status/entities/payment-status.entity";
 import { Column, Entity, JoinColumn, ManyToOne,OneToMany, TableInheritance } from "typeorm";
 
 @Entity({ name: 'payment' })

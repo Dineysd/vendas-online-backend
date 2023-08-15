@@ -1,6 +1,6 @@
-import { BaseGeneric } from "src/model-base/base-generic.entity";
-import { OrderEntity } from "src/order/entities/order.entity";
-import { ProductEntity } from "src/product/entities/product.entity";
+import { BaseGeneric } from "../../model-base/base-generic.entity";
+import { OrderEntity } from "../../order/entities/order.entity";
+import { ProductEntity } from "../../product/entities/product.entity";
 import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
 
 @Entity({ name: 'order_product' })
