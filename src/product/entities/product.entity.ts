@@ -3,6 +3,7 @@ import { BaseGeneric } from "../../model-base/base-generic.entity";
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from "typeorm";
 import { ApiProperty } from "@nestjs/swagger";
 import { CartProductEntity } from "../../cart-product/entities/cart-product.entity";
+import { OrderProductEntity } from "src/order-product/entities/order-product.entity";
 
 @Entity({name: 'product'})
 export class ProductEntity extends BaseGeneric {
@@ -27,4 +28,7 @@ export class ProductEntity extends BaseGeneric {
 
   @OneToMany(() => CartProductEntity, (cartProduct) => cartProduct.product)
   cartProduct?: CartProductEntity[];
+
+  @OneToMany(() => OrderProductEntity, (orderProduct) => orderProduct.product)
+  ordersProduct?: OrderProductEntity[]
 }

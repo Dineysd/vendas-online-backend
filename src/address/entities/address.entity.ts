@@ -1,8 +1,9 @@
 import { UserEntity } from "../../user/entities/user.entity";
 import { BaseGeneric } from "../../model-base/base-generic.entity";
-import { Column, Entity, ManyToOne, JoinColumn } from "typeorm";
+import { Column, Entity, ManyToOne, JoinColumn, OneToMany } from "typeorm";
 import { CityEntity } from "../../city/entities/city.entity";
 import { ApiProperty } from "@nestjs/swagger";
+import { OrderEntity } from "src/order/entities/order.entity";
 
 @Entity({ name: 'address' })
 export class AddressEntity extends BaseGeneric {
@@ -29,4 +30,7 @@ export class AddressEntity extends BaseGeneric {
   @ManyToOne(() => CityEntity, (city) => city.addresses)
   @JoinColumn({ name: 'city_id', referencedColumnName: 'id' })
   city?: CityEntity;
+  
+  @OneToMany(()=> OrderEntity, (order)=> order.address)
+  orders?: OrderEntity[];
 }

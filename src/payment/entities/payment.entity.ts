@@ -1,5 +1,7 @@
 import { BaseGeneric } from "src/model-base/base-generic.entity";
-import { Column, Entity, TableInheritance } from "typeorm";
+import { OrderEntity } from "src/order/entities/order.entity";
+import { PaymentStatusEntity } from "src/payment-status/entities/payment-status.entity";
+import { Column, Entity, JoinColumn, ManyToOne,OneToMany, TableInheritance } from "typeorm";
 
 @Entity({ name: 'payment' })
 @TableInheritance({ column: { type: 'varchar', name: 'type' } })
@@ -19,5 +21,12 @@ export abstract class PaymentEntity extends BaseGeneric{
   
     @Column({ name: 'type', nullable: false })
     type: string;
+
+    @OneToMany(()=> OrderEntity, (order)=> order.payment)
+    orders?: OrderEntity[]
+
+    @ManyToOne(()=> PaymentStatusEntity, (status)=> status.payments)
+    @JoinColumn({ name: 'status_id', referencedColumnName: 'id' })
+    paymentStatus?: PaymentStatusEntity
 
 }

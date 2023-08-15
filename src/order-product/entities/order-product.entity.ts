@@ -1,5 +1,7 @@
 import { BaseGeneric } from "src/model-base/base-generic.entity";
-import { Column, Entity } from "typeorm";
+import { OrderEntity } from "src/order/entities/order.entity";
+import { ProductEntity } from "src/product/entities/product.entity";
+import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
 
 @Entity({ name: 'order_product' })
 export class OrderProductEntity extends BaseGeneric{
@@ -15,4 +17,12 @@ export class OrderProductEntity extends BaseGeneric{
 
   @Column({ name: 'price', nullable: false })
   price: number;
+
+  @ManyToOne(() => OrderEntity, (order) => order.ordersProduct)
+  @JoinColumn({ name: 'order_id', referencedColumnName: 'id' })
+  order?: OrderEntity;
+
+  @ManyToOne(() => ProductEntity, (product) => product.ordersProduct)
+  @JoinColumn({ name: 'product_id', referencedColumnName: 'id' })
+  product?: ProductEntity
 }

@@ -2,6 +2,7 @@ import { AddressEntity } from '../../address/entities/address.entity';
 import { BaseGeneric } from '../../model-base/base-generic.entity';
 import { Column, OneToMany, Entity } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
+import { OrderEntity } from 'src/order/entities/order.entity';
 
 @Entity({name: 'user'})
 export class UserEntity extends BaseGeneric {
@@ -24,5 +25,8 @@ export class UserEntity extends BaseGeneric {
 
     @OneToMany(() => AddressEntity, (address) => address.user)
     addresses?: AddressEntity[];
+    
+    @OneToMany(()=> OrderEntity, (order)=> order.address)
+    orders?: OrderEntity[];
 
 }
