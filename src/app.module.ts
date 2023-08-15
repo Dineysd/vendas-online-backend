@@ -16,6 +16,8 @@ import { CartModule } from './cart/cart.module';
 import { CartProductModule } from './cart-product/cart-product.module';
 import { PaymentStatusModule } from './payment-status/payment-status.module';
 import { PaymentModule } from './payment/payment.module';
+import { OrderModule } from './order/order.module';
+import { OrderProductModule } from './order-product/order-product.module';
 
 @Module({
   imports: [UserModule,
@@ -32,7 +34,7 @@ import { PaymentModule } from './payment/payment.module';
     entities: [`${__dirname}/**/*.entity{.js,*.ts}`],
     migrations: [`${__dirname}/migration/{.ts,*.js}`],
     migrationsRun: true,
-  }), StateModule, CityModule, AddressModule, CacheModule, AuthModule, JwtModule, CategoryModule, ProductModule, CartModule, CartProductModule, PaymentStatusModule, PaymentModule],
+  }), StateModule, CityModule, AddressModule, CacheModule, AuthModule, JwtModule, CategoryModule, ProductModule, CartModule, CartProductModule, PaymentStatusModule, PaymentModule, OrderModule, OrderProductModule],
   providers: [{
     provide: APP_GUARD,
     useClass: RolesGuard,

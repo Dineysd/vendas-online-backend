@@ -1,0 +1,18 @@
+import { BaseGeneric } from "src/model-base/base-generic.entity";
+import { Column, Entity } from "typeorm";
+
+@Entity({ name: 'order_product' })
+export class OrderProductEntity extends BaseGeneric{
+
+  @Column({ name: 'order_id', nullable: false })
+  orderId: number;
+
+  @Column({ name: 'product_id', nullable: false })
+  productId: number;
+
+  @Column({ name: 'amount', nullable: false })
+  amount: number;
+
+  @Column({ name: 'price', nullable: false })
+  price: number;
+}
