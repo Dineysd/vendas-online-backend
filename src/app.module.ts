@@ -14,7 +14,8 @@ import { CategoryModule } from './category/category.module';
 import { ProductModule } from './product/product.module';
 import { CartModule } from './cart/cart.module';
 import { CartProductModule } from './cart-product/cart-product.module';
-import { Category2Controller } from './category2/category2.controller';
+import { PaymentStatusModule } from './payment-status/payment-status.module';
+import { PaymentModule } from './payment/payment.module';
 
 @Module({
   imports: [UserModule,
@@ -31,8 +32,7 @@ import { Category2Controller } from './category2/category2.controller';
     entities: [`${__dirname}/**/*.entity{.js,*.ts}`],
     migrations: [`${__dirname}/migration/{.ts,*.js}`],
     migrationsRun: true,
-  }), StateModule, CityModule, AddressModule, CacheModule, AuthModule, JwtModule, CategoryModule, ProductModule, CartModule, CartProductModule],
-  controllers: [Category2Controller],
+  }), StateModule, CityModule, AddressModule, CacheModule, AuthModule, JwtModule, CategoryModule, ProductModule, CartModule, CartProductModule, PaymentStatusModule, PaymentModule],
   providers: [{
     provide: APP_GUARD,
     useClass: RolesGuard,
