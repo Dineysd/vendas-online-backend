@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { PaymentService } from '../payment/payment.service';
 import { Repository } from 'typeorm';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
@@ -8,9 +9,11 @@ import { OrderEntity } from './entities/order.entity';
 @Injectable()
 export class OrderService {
   constructor(@InjectRepository(OrderEntity) 
-  private readonly repository: Repository<OrderEntity> ){}
+  private readonly repository: Repository<OrderEntity>,
+  private readonly paymentService: PaymentService, ){}
 
   async create(createOrderDto: CreateOrderDto, cartId: number) {
+    await this.paymentService.createPayment(createOrderDto, null, null)
     return 'This action adds a new order';
   }
 

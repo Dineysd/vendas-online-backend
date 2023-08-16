@@ -29,4 +29,17 @@ export abstract class PaymentEntity extends BaseGeneric{
     @JoinColumn({ name: 'status_id', referencedColumnName: 'id' })
     paymentStatus?: PaymentStatusEntity
 
+    constructor(
+        statusId: number,
+        price: number,
+        discount: number,
+        finalPrice: number,
+      ) {
+        super();
+        this.statusId = statusId;
+        this.price = price;
+        this.discount = discount;
+        this.finalPrice = finalPrice;
+      }
+
 }
