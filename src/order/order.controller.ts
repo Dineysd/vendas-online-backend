@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, Validation
 import { OrderService } from './order.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
+import { UserId } from 'src/decorators/user-id.decorator';
 
 @Controller('order')
 export class OrderController {
@@ -9,8 +10,8 @@ export class OrderController {
 
   @Post('/cart/:cartId')
   @UsePipes(ValidationPipe)
-  createOrder(@Body() createOrderDto: CreateOrderDto, @Param('cartId') cartId: number) {
-    return this.orderService.create(createOrderDto, cartId);
+  createOrder(@Body() createOrderDto: CreateOrderDto, @Param('cartId') cartId: number, @UserId() userId: number) {
+    return this.orderService.create(createOrderDto, cartId, userId);
   }
 
   @Get()
