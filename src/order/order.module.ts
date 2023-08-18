@@ -6,9 +6,10 @@ import { OrderEntity } from './entities/order.entity';
 import { PaymentModule } from '../payment/payment.module';
 import { CartModule } from '../cart/cart.module';
 import { OrderProductModule } from 'src/order-product/order-product.module';
+import { ProductModule } from '../product/product.module';
 
 @Module({
-  imports: [PaymentModule, CartModule, OrderProductModule ,TypeOrmModule.forFeature([OrderEntity])],
+  imports: [PaymentModule, CartModule, OrderProductModule, ProductModule ,TypeOrmModule.forFeature([OrderEntity])],
   controllers: [OrderController],
   providers: [OrderService]
 })

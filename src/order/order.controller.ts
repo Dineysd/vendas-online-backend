@@ -8,10 +8,10 @@ import { UserId } from 'src/decorators/user-id.decorator';
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}
 
-  @Post('/cart/:cartId')
+  @Post()
   @UsePipes(ValidationPipe)
-  createOrder(@Body() createOrderDto: CreateOrderDto, @Param('cartId') cartId: number, @UserId() userId: number) {
-    return this.orderService.create(createOrderDto, cartId, userId);
+  createOrder(@Body() createOrderDto: CreateOrderDto, @UserId() userId: number) {
+    return this.orderService.create(createOrderDto, userId);
   }
 
   @Get()
