@@ -44,23 +44,23 @@ export class PaymentService {
         products: ProductEntity[],
         cart: CartEntity,
       ): Promise<PaymentEntity> {
-        //const finalPrice = this.generateFinalPrice(cart, products);
+        const finalPrice = this.generateFinalPrice(cart, products);
     
         if (createOrderDTO.amountPayments) {
           const paymentCreditCard = new PaymentCreditCardEntity(
             PaymentType.Done,
+            finalPrice,
             0,
-            0,
-            0,
+            finalPrice,
             createOrderDTO,
           );
           return this.paymentRepository.save(paymentCreditCard);
         } else if (createOrderDTO.codePix && createOrderDTO.datePayment) {
           const paymentPix = new PaymentPixEntity(
             PaymentType.Done,
+            finalPrice,
             0,
-            0,
-            0,
+            finalPrice,
             createOrderDTO,
           );
           return this.paymentRepository.save(paymentPix);
